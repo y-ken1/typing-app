@@ -1,8 +1,9 @@
-import { useRef, useEffect, useState, useCallback } from "react";
-import SplitedText from "./components/SplitedText";
-import { Box, Stack, Typography } from "@mui/material";
+import { useRef, useEffect, useState } from "react";
+import SplitedText from "../components/SplitedText";
+import { Box, Stack, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import { useKey } from "react-use";
-import textData from "./textData.json";
+import textData from "../textData.json";
 
 const initialTypingData = {
   text: textData[0],
@@ -11,7 +12,7 @@ const initialTypingData = {
   prevChar: "",
 };
 
-function App() {
+function TypingPage() {
   const [typingData, setTypingData] = useState(initialTypingData);
   const typingDataRef = useRef();
 
@@ -64,15 +65,30 @@ function App() {
   useKey(true, handleKeyUp, { event: "keyup" });
 
   return (
-    <div>
-      <Stack direction="column" height="100%" margin="20px">
-        <Typography variant="subtitle1">
-          No.{typingData.textIndex + 1}
-        </Typography>
-        <SplitedText text={typingData.text} index={typingData.charIndex} />
-      </Stack>
-    </div>
+    <Stack
+      direction="column"
+      height="100%"
+      margin="20px"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Box sx={{ width: "100%", textAlign: "right" }}>
+        <Link to="/">
+          <Button variant="contained" color="primary">
+            Topへ
+          </Button>
+        </Link>
+      </Box>
+
+      <Typography variant="h5" my="20px">
+        No.{typingData.textIndex + 1}
+      </Typography>
+      <SplitedText text={typingData.text} index={typingData.charIndex} />
+    </Stack>
   );
 }
 
-export default App;
+export default TypingPage;
